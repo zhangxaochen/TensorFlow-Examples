@@ -17,10 +17,11 @@ b = tf.constant(3)
 
 # Launch the default graph.
 with tf.Session() as sess:
-    print("a=2, b=3")
+    print("a=2, b=3", sess.run([a, b]))
     print("Addition with constants: %i" % sess.run(a+b))
     print("Multiplication with constants: %i" % sess.run(a*b))
-
+    c=a+5
+    print('c=a+5=', sess.run(c))
 # Basic Operations with variable as graph input
 # The value returned by the constructor represents the output
 # of the Variable op. (define as input when running session)

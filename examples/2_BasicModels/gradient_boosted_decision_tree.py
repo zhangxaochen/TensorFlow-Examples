@@ -30,6 +30,11 @@ mnist = input_data.read_data_sets("/tmp/data/", one_hot=False,
 
 # Parameters
 batch_size = 4096 # The number of samples per batch
+#改小bsz, 尝试解决： NotFoundError: No registered 'Quantiles' OpKernel for GPU devices compatible with node
+#https://github.com/tensorflow/tensorflow/issues/17752
+batch_size = 512 #×
+batch_size = 32 #×
+batch_size = 8 #×
 num_classes = 10 # The 10 digits
 num_features = 784 # Each image is 28x28 pixels
 max_steps = 10000
@@ -52,7 +57,7 @@ growing_mode = gbdt_learner.LearnerConfig.LAYER_BY_LAYER
 learner_config.growing_mode = growing_mode
 run_config = tf.contrib.learn.RunConfig(save_checkpoints_secs=300)
 learner_config.multi_class_strategy = (
-    gbdt_learner.LearnerConfig.DIAGONAL_HESSIAN)\
+    gbdt_learner.LearnerConfig.DIAGONAL_HESSIAN)
 
 # Create a TensorFlor GBDT Estimator
 gbdt_model = GradientBoostedDecisionTreeClassifier(

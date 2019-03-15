@@ -25,7 +25,7 @@ n_samples = len(train_X)
 # Parameters
 learning_rate = 0.01
 display_step = 100
-num_steps = 1000
+num_steps = 5000
 
 # Weight and Bias
 W = tfe.Variable(np.random.randn())
@@ -41,15 +41,18 @@ def linear_regression(inputs):
 def mean_square_fn(model_fn, inputs, labels):
     return tf.reduce_sum(tf.pow(model_fn(inputs) - labels, 2)) / (2 * n_samples)
 
+cost = mean_square_fn
 
 # SGD Optimizer
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
 # Compute gradients
-grad = tfe.implicit_gradients(mean_square_fn)
+# grad = tfe.implicit_gradients(mean_square_fn)
+grad = tfe.implicit_gradients(cost)
 
 # Initial cost, before optimizing
 print("Initial cost= {:.9f}".format(
-    mean_square_fn(linear_regression, train_X, train_Y)),
+    # mean_square_fn(linear_regression, train_X, train_Y)),
+    cost(linear_regression, train_X, train_Y)),
     "W=", W.numpy(), "b=", b.numpy())
 
 # Training
@@ -59,7 +62,8 @@ for step in range(num_steps):
 
     if (step + 1) % display_step == 0 or step == 0:
         print("Epoch:", '%04d' % (step + 1), "cost=",
-              "{:.9f}".format(mean_square_fn(linear_regression, train_X, train_Y)),
+            #   "{:.9f}".format(mean_square_fn(linear_regression, train_X, train_Y)),
+              "{:.9f}".format(cost(linear_regression, train_X, train_Y)),
               "W=", W.numpy(), "b=", b.numpy())
 
 # Graphic display

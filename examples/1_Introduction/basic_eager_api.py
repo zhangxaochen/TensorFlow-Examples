@@ -64,5 +64,7 @@ print("a * b = %s" % d)
 print("Iterate through Tensor 'a':")
 for i in range(a.shape[0]):
     for j in range(a.shape[1]):
-        print(a[i][j])
+        # print(a[i][j])
+        print('%d' %(a[i][j]))
+
 
